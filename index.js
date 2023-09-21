@@ -21,17 +21,39 @@ productForm.addEventListener("submit", function (e) {
         } else {
             // Por otro lado aqui si no se está editando, lo que hacemos es agregar un nuevo producto
             addProduct(id, name, description);
-
-
-
-            productName.value = "";
-            descriptionproduct.value = "";
-            idproduct.value = ""; // Limpiamos el campo de ID
         }
-    });
+
+        productName.value = "";
+        descriptionproduct.value = "";
+        idproduct.value = ""; // Limpiamos el campo de ID
+    }
+});
 
 function addProduct(id, name, description) {
     const li = createProductListItem(id, name, description);
 
     productList.appendChild(li);
+}
+
+function createProductListItem(id, name, description) {
+    const li = document.createElement("li");
+    li.innerHTML = `
+        <span>ID: ${id} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nombre: ${name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Descripción: ${description}</span>
+        <button class="edit-btn" data-id="${id}">Editar</button>
+        <button class="delete-btn" data-id="${id}">Eliminar</button>
+    `;
+
+    li.querySelector(`.delete-btn[data-id="${id}"]`).addEventListener("click", function () {
+        deleteProduct(id);
+    });
+
+    li.querySelector(`.edit-btn[data-id="${id}"]`).addEventListener("click", function () {
+        // Al dar clic en el botón de "Editar", llenamos el formulario con los datos del producto
+        idproduct.value = id;
+        productName.value = name;
+        descriptionproduct.value = description;
+        editingProductId = id; // Solo Establecemos el ID del producto que se está editando
+    });
+
+    return li;
 }
