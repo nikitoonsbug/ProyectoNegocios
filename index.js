@@ -57,3 +57,20 @@ function createProductListItem(id, name, description) {
 
     return li;
 }
+function deleteProduct(id) {
+    const productListItem = document.querySelector(`.delete-btn[data-id="${id}"]`).closest("li");
+    if (productListItem) {
+        productList.removeChild(productListItem);
+    }
+}
+
+
+
+function editProduct(edit, id, name, description) {
+    // Aqui solo Actualizamos el elemento de la lista con los nuevos valores
+    const productInfo = document.querySelector(`.edit-btn[data-id="${edit}"]`).previousElementSibling;
+    productInfo.textContent = `ID: ${id} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Nombre: ${name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Descripción: ${description}`;
+    deleteProduct(edit);
+    addProduct(id, name, description);
+
+}
